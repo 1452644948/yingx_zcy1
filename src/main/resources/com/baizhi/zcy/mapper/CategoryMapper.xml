@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.zcy.dao.CategoryMapper">
+
+    <resultMap id="selectAllMap" type="Category">
+        <id property="id" column="id"></id>
+        <result property="cateName" column="cate_name"></result>
+        <result property="parentId" column="parent_id"></result>
+        <result property="levels" column="levels"></result>
+        <collection property="categoryList" ofType="Category">
+            <id property="id" column="id1"></id>
+            <result property="cateName" column="cate_name1"></result>
+            <result property="parentId" column="parent_id1"></result>
+            <result property="levels" column="levels1"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectAll" resultMap="selectAllMap">
+        select c1.*,c2.id id1,c2.cate_name cate_name1,c2.parent_id parent_id1,c2.levels levels1
+         from yx_category c1 inner join yx_category c2 on c1.id=c2.parent_id
+    </select>
+
+</mapper>
